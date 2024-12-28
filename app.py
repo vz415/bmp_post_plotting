@@ -59,7 +59,7 @@ def theta_transform_and_log_prob_adjustment_torch(shift, scale, low=1e-4, high=1
 
 theta_z_score = theta_transform_and_log_prob_adjustment_torch(0, 1.81, low=1e-4, high=1e2)
 
-# Load datasets (mocked here - replace with your file paths or data loaders)
+# Load datasets
 @st.cache
 def load_datasets():
     """
@@ -84,7 +84,6 @@ def load_datasets():
         'BMPR1A KD (maybe BMPR2)': post_lps_samples_3['seeds_data'][0],
     }
 
-
 datasets = load_datasets()
 
 # Z-score transformation
@@ -92,6 +91,29 @@ for key, dataset in datasets.items():
     raw_samples = torch.tensor(dataset['post_samples']).float()
     zscored = theta_z_score(raw_samples)
     dataset['zscored'] = zscored.numpy()
+
+# Custom dimension names mapping
+t_mappings = {}
+ligands = {
+    'L_1': 'BMP4',
+    'L_2': 'BMP7',
+    'L_3': 'BMP9',
+    'L_4': 'BMP10',
+    'L_5': 'GDF5'
+}
+type_i_rec = ['ACVR1', 'BMPR1A']
+type_ii_rec = ['ACVR2A', 'ACVR2B', 'BMPR2']
+for l_num in range(1, 6):
+    ligand = ligands[f'L_{l_num}']
+    for i in range(1, 3):
+        type_i = type_i_rec[i - 1]
+        for j in range(1, 4):
+            type_ii = type_ii_rec[j - 1]
+            t_key = f'K_{l_num}_{i}_{j}'
+            t_value = f'{ligand}-{type_i}-{type_ii}'
+            t_mappings[t_key] = t_value
+e_mappings = {f'e_{key[2:]}': value for key, value in t_mappings.items()}
+combined_mappings = {**t_mappings, **e_mappings}
 
 # Interactive Streamlit App
 st.title("Interactive Plot for Posterior Samples")
@@ -103,6 +125,12 @@ selected_datasets = st.sidebar.multiselect(
     "Select Datasets", options=list(datasets.keys()), default=list(datasets.keys())
 )
 
+# Map current_dim to custom label
+is_t = current_dim < 30
+idx = current_dim if is_t else current_dim - 30
+key = f"{'K' if is_t else 'e'}_{(idx // 6) + 1}_{((idx % 6) // 3) + 1}_{(idx % 3) + 1}"
+label = combined_mappings.get(key, "Unknown Dimension")
+
 # Plot
 fig, ax = plt.subplots(figsize=(7, 5))
 bins = np.logspace(np.log10(1e-4), np.log10(1e2 + 1e-1), 50)
@@ -113,7 +141,7 @@ for dataset_name in selected_datasets:
     ax.hist(dim_samples, bins=bins, alpha=0.5, label=dataset_name, edgecolor='black', linewidth=0.5)
 
 ax.set_xscale('log')
-ax.set_xlabel(f"Dimension {current_dim}")
+ax.set_xlabel(f"{key}: {label}")
 ax.set_ylabel("Counts")
 ax.legend()
 
