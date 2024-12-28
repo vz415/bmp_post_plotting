@@ -60,7 +60,7 @@ def theta_transform_and_log_prob_adjustment_torch(shift, scale, low=1e-4, high=1
 theta_z_score = theta_transform_and_log_prob_adjustment_torch(0, 1.81, low=1e-4, high=1e2)
 
 # Load datasets
-@st.cache
+@st.cache_data
 def load_datasets():
     """
     Load posterior samples from .pth files into a dictionary format.
@@ -120,7 +120,11 @@ st.title("Interactive Plot for Posterior Samples")
 st.sidebar.title("Controls")
 
 # Sidebar options
-current_dim = st.sidebar.slider("Select Dimension", 0, 59, 0)
+# Sidebar options
+current_dim = st.sidebar.slider(
+    "BMP Model Parameter Histogram",  # Updated label here
+    0, 59, 0
+)
 selected_datasets = st.sidebar.multiselect(
     "Select Datasets", options=list(datasets.keys()), default=list(datasets.keys())
 )
