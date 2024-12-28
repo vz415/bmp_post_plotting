@@ -1,5 +1,5 @@
 torch
-matplotlib==3.7.1
+matplotlib
 # ipywidgets==8.1.0
-numpy==1.23.5
+numpy
 streamlit
