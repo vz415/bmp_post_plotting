@@ -109,10 +109,10 @@ for l_num in range(1, 6):
         type_i = type_i_rec[i - 1]
         for j in range(1, 4):
             type_ii = type_ii_rec[j - 1]
-            t_key = f'K_{l_num}_{i}_{j}'
+            t_key = f'K_{l_num}_{i}_{j} [M⁻²s⁻¹]'
             t_value = f'{ligand}-{type_i}-{type_ii}'
             t_mappings[t_key] = t_value
-e_mappings = {f'e_{key[2:]}': value for key, value in t_mappings.items()}
+e_mappings = {f'e_{key[2:]} [a.u.]': value for key, value in t_mappings.items()}
 combined_mappings = {**t_mappings, **e_mappings}
 
 # Interactive Streamlit App
