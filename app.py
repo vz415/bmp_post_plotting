@@ -145,7 +145,8 @@ for dataset_name in selected_datasets:
     ax.hist(dim_samples, bins=bins, alpha=0.5, label=dataset_name, edgecolor='black', linewidth=0.5)
 
 ax.set_xscale('log')
-ax.set_xlabel(f"{key}: {label}")
+# ax.set_xlabel(f"{key}: {label}")
+ax.set_xlabel(f"{key}: {combined_mappings[key]}")
 ax.set_ylabel("Counts")
 ax.legend()
 
