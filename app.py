@@ -5,10 +5,6 @@ import torch
 from torch.distributions import Transform, constraints
 from torch.distributions.transforms import SigmoidTransform, AffineTransform, ComposeTransform
 
-def to_subscript(text):
-    subs = str.maketrans("0123456789", "₀₁₂₃₄₅₆₇₈₉")
-    return text.translate(subs)
-
 # Define transformations
 class InverseLogUniformBijector(Transform):
     domain = constraints.positive
