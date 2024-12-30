@@ -118,9 +118,11 @@ for l_num in range(1, 6):
             t_value = f'{ligand}-{type_i}-{type_ii} [M⁻²s⁻¹]'
             t_mappings[t_key] = t_value
 
-# For expression levels
-e_mappings = {f'e_{key[2:]}': f'{value.split("[")[0].strip()} [a.u.]' for key, value in t_mappings.items()}
-
+# For expression levels with a.u. units, but strip the rate constant units first
+e_mappings = {
+    f'e_{key[2:]}': f'{value.split("[")[0].strip()} [a.u.]' 
+    for key, value in t_mappings.items()
+}
 combined_mappings = {**t_mappings, **e_mappings}
 
 # Interactive Streamlit App
