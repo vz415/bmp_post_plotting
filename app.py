@@ -109,7 +109,7 @@ for l_num in range(1, 6):
         type_i = type_i_rec[i - 1]
         for j in range(1, 4):
             type_ii = type_ii_rec[j - 1]
-            t_key = r'K_{l_num i j}' #  [M$^{-2}$s$^{-1}$]
+            t_key = fr'K_{l_num}_{i}_{j}' #  [M$^{-2}$s$^{-1}$]
             t_value = f'{ligand}-{type_i}-{type_ii}  [M⁻²s⁻¹]'
             t_mappings[t_key] = t_value
 e_mappings = {f'e_{key[2:]}': f'{value} [a.u.]' for key, value in t_mappings.items()}
