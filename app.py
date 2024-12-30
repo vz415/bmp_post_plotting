@@ -129,7 +129,7 @@ st.sidebar.title("Controls")
 # Sidebar options
 current_dim = st.sidebar.slider(
     "BMP Model Parameter Histogram",  # Updated label here
-    0, 59, 0
+    1, 60, 0
 )
 selected_datasets = st.sidebar.multiselect(
     "Select Datasets", options=list(datasets.keys()), default=list(datasets.keys())
