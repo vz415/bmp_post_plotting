@@ -114,15 +114,12 @@ for l_num in range(1, 6):
         type_i = type_i_rec[i - 1]
         for j in range(1, 4):
             type_ii = type_ii_rec[j - 1]
-            t_key = f'K{to_subscript(f"{l_num}{i}{j}")}'  # Will render as K₃₂₃
+            t_key = fr'K_{l_num}_{i}_{j}'
             t_value = f'{ligand}-{type_i}-{type_ii} [M⁻²s⁻¹]'
             t_mappings[t_key] = t_value
 
 # For expression levels
-e_mappings = {
-    f'e{to_subscript(key[1:])}': f'{value.split("[")[0].strip()} [a.u.]'  # Will render as e₃₂₃
-    for key, value in t_mappings.items()
-}
+e_mappings = {f'e_{key[2:]}': f'{value.split("[")[0].strip()} [a.u.]' for key, value in t_mappings.items()}
 
 combined_mappings = {**t_mappings, **e_mappings}
 
