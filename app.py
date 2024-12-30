@@ -93,7 +93,6 @@ for key, dataset in datasets.items():
     dataset['zscored'] = zscored.numpy()
 
 # Custom dimension names mapping
-t_mappings = {}
 ligands = {
     'L_1': 'BMP4',
     'L_2': 'BMP7',
@@ -103,16 +102,24 @@ ligands = {
 }
 type_i_rec = ['ACVR1', 'BMPR1A']
 type_ii_rec = ['ACVR2A', 'ACVR2B', 'BMPR2']
+# For the rate constants with units
+t_mappings = {}
 for l_num in range(1, 6):
     ligand = ligands[f'L_{l_num}']
     for i in range(1, 3):
         type_i = type_i_rec[i - 1]
         for j in range(1, 4):
             type_ii = type_ii_rec[j - 1]
-            t_key = fr'K_{l_num}_{i}_{j}' #  [M$^{-2}$s$^{-1}$]
-            t_value = f'{ligand}-{type_i}-{type_ii}  [M⁻²s⁻¹]'
+            t_key = fr'K_{l_num}_{i}_{j}'
+            t_value = f'{ligand}-{type_i}-{type_ii} [M⁻²s⁻¹]'
             t_mappings[t_key] = t_value
-e_mappings = {f'e_{key[2:]}': f'{value} [a.u.]' for key, value in t_mappings.items()}
+
+# For expression levels with a.u. units, but strip the rate constant units first
+e_mappings = {
+    f'e_{key[2:]}': f'{value.split("[")[0].strip()} [a.u.]' 
+    for key, value in t_mappings.items()
+}
+
 combined_mappings = {**t_mappings, **e_mappings}
 
 # Interactive Streamlit App
