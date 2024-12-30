@@ -110,13 +110,14 @@ for l_num in range(1, 6):
         type_i = type_i_rec[i - 1]
         for j in range(1, 4):
             type_ii = type_ii_rec[j - 1]
-            t_key = f'K_{l_num}{i}{j}'
+            # Use LaTeX subscript notation with curly braces
+            t_key = f'K_{{{l_num}{i}{j}}}'  # This will render as K₃₂₃
             t_value = f'{ligand}-{type_i}-{type_ii} [M⁻²s⁻¹]'
             t_mappings[t_key] = t_value
 
-# For expression levels with a.u. units, but strip the rate constant units first
+# For expression levels
 e_mappings = {
-    f'e_{key[2:]}': f'{value.split("[")[0].strip()} [a.u.]' 
+    f'e_{{{key[2:]}}}': f'{value.split("[")[0].strip()} [a.u.]' 
     for key, value in t_mappings.items()
 }
 
@@ -153,6 +154,8 @@ for dataset_name in selected_datasets:
 
 ax.set_xscale('log')
 # ax.set_xlabel(f"{key}: {label}")
+# ax.set_xlabel(f"{key}: {combined_mappings[key]}")
+plt.rcParams['text.usetex'] = True  # Enable LaTeX rendering
 ax.set_xlabel(f"{key}: {combined_mappings[key]}")
 ax.set_ylabel("Counts")
 ax.legend()
