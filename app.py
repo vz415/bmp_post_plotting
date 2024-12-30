@@ -110,7 +110,7 @@ for l_num in range(1, 6):
         type_i = type_i_rec[i - 1]
         for j in range(1, 4):
             type_ii = type_ii_rec[j - 1]
-            t_key = f'K_{l_num}_{i}_{j}'
+            t_key = f'K_{l_num}{i}{j}'
             t_value = f'{ligand}-{type_i}-{type_ii} [M⁻²s⁻¹]'
             t_mappings[t_key] = t_value
 
