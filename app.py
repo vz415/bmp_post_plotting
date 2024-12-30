@@ -112,7 +112,7 @@ for l_num in range(1, 6):
             t_key = fr'K_{l_num}_{i}_{j}' #  [M$^{-2}$s$^{-1}$]
             t_value = f'{ligand}-{type_i}-{type_ii}'
             t_mappings[t_key] = t_value
-e_mappings = {f'e_{key[2:]} [a.u.]': value for key, value in t_mappings.items()}
+e_mappings = {f'e_{key[2:]}[a.u.]': value for key, value in t_mappings.items()}
 combined_mappings = {**t_mappings, **e_mappings}
 
 # Interactive Streamlit App
