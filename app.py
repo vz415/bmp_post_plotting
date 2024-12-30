@@ -157,8 +157,6 @@ for dataset_name in selected_datasets:
 
 ax.set_xscale('log')
 # ax.set_xlabel(f"{key}: {label}")
-# ax.set_xlabel(f"{key}: {combined_mappings[key]}")
-plt.rcParams['text.usetex'] = True
 ax.set_xlabel(f"{key}: {combined_mappings[key]}")
 ax.set_ylabel("Counts")
 ax.legend()
