@@ -5,6 +5,10 @@ import torch
 from torch.distributions import Transform, constraints
 from torch.distributions.transforms import SigmoidTransform, AffineTransform, ComposeTransform
 
+def to_subscript(text):
+    subs = str.maketrans("0123456789", "₀₁₂₃₄₅₆₇₈₉")
+    return text.translate(subs)
+
 # Define transformations
 class InverseLogUniformBijector(Transform):
     domain = constraints.positive
@@ -110,14 +114,13 @@ for l_num in range(1, 6):
         type_i = type_i_rec[i - 1]
         for j in range(1, 4):
             type_ii = type_ii_rec[j - 1]
-            # Use LaTeX subscript notation with curly braces
-            t_key = f'K_{{{l_num}{i}{j}}}'  # This will render as K₃₂₃
+            t_key = f'K{to_subscript(f"{l_num}{i}{j}")}'  # Will render as K₃₂₃
             t_value = f'{ligand}-{type_i}-{type_ii} [M⁻²s⁻¹]'
             t_mappings[t_key] = t_value
 
 # For expression levels
 e_mappings = {
-    f'e_{{{key[2:]}}}': f'{value.split("[")[0].strip()} [a.u.]' 
+    f'e{to_subscript(key[1:])}': f'{value.split("[")[0].strip()} [a.u.]'  # Will render as e₃₂₃
     for key, value in t_mappings.items()
 }
 
@@ -155,7 +158,7 @@ for dataset_name in selected_datasets:
 ax.set_xscale('log')
 # ax.set_xlabel(f"{key}: {label}")
 # ax.set_xlabel(f"{key}: {combined_mappings[key]}")
-plt.rcParams['text.usetex'] = True  # Enable LaTeX rendering
+plt.rcParams['text.usetex'] = True
 ax.set_xlabel(f"{key}: {combined_mappings[key]}")
 ax.set_ylabel("Counts")
 ax.legend()
