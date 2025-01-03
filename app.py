@@ -116,7 +116,7 @@ for l_num in range(1, 6):
 
 # For expression levels with a.u. units, but strip the rate constant units first
 e_mappings = {
-    f'e_{key[2:]}': f'{value.split("[")[0].strip()} Phosphorylation Efficiency [a.u.]' 
+    f'e_{key[2:]}': f'{value.split("B")[0].strip()} Phosphorylation Efficiency [a.u.]' 
     for key, value in t_mappings.items()
 }
 combined_mappings = {**t_mappings, **e_mappings}
