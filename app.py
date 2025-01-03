@@ -111,18 +111,18 @@ for l_num in range(1, 6):
         for j in range(1, 4):
             type_ii = type_ii_rec[j - 1]
             t_key = fr'K_{l_num}_{i}_{j}'
-            t_value = f'{ligand}-{type_i}-{type_ii} [M⁻²s⁻¹]'
+            t_value = f'{ligand}-{type_i}-{type_ii} Binding Affinity [molecule⁻¹]'
             t_mappings[t_key] = t_value
 
 # For expression levels with a.u. units, but strip the rate constant units first
 e_mappings = {
-    f'e_{key[2:]}': f'{value.split("[")[0].strip()} [a.u.]' 
+    f'e_{key[2:]}': f'{value.split("[")[0].strip()} Phosphorylation Efficiency [a.u.]' 
     for key, value in t_mappings.items()
 }
 combined_mappings = {**t_mappings, **e_mappings}
 
 # Interactive Streamlit App
-st.title("Interactive Plot for Posterior Samples")
+st.title("Interactive Plot Posterior Samples by Index and Cell Type")
 st.sidebar.title("Controls")
 
 # Sidebar options
