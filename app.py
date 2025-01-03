@@ -122,7 +122,7 @@ e_mappings = {
 combined_mappings = {**t_mappings, **e_mappings}
 
 # Interactive Streamlit App
-st.title("Interactive Plot Posterior Samples by Index and Cell Type")
+st.title("Interactive Plot of Posterior Samples by Index and Cell Type")
 st.sidebar.title("Controls")
 
 # Sidebar options
