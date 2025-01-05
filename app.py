@@ -115,10 +115,18 @@ for l_num in range(1, 6):
             t_mappings[t_key] = t_value
 
 # For expression levels with a.u. units, but strip the rate constant units first
-e_mappings = {
-    f'e_{key[2:]}': f'{value.split("B")[0].strip()} Phosphorylation Efficiency [a.u.]' 
-    for key, value in t_mappings.items()
-}
+# e_mappings = {
+#     f'e_{key[2:]}': f'{value.split("B")[0].strip()} Phosphorylation Efficiency [a.u.]' 
+#     for key, value in t_mappings.items()
+# }
+e_mappings = {}
+for l_num in range(1, 6):
+    ligand = ligands[f'L_{l_num}']
+    for i in range(1, 3):
+        for j in range(1, 4):
+            e_key = f'e_{l_num}_{i}_{j}'
+            e_value = f'{ligand}-{type_i}-{type_ii} Phosphorylation Efficiency [a.u.]'
+            e_mappings[e_key] = e_value
 combined_mappings = {**t_mappings, **e_mappings}
 
 # Interactive Streamlit App
